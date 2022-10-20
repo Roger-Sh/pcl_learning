@@ -1,0 +1,6 @@
+# vscode related
+.vscode
+
+# cpp related
+*/build
+*/bin

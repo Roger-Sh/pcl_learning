@@ -91,3 +91,102 @@
 
         -   `.zshrc` 中添加 `export PATH=$PATH:/usr/local/cuda-11.1/bin/`
 
+
+
+
+
+# PCL Official Tutorial
+
+[PCL Official Tutorial](https://pcl.readthedocs.io/projects/tutorials/en/master/)
+
+
+
+## Basic Usage
+
+### PCL Walkthrough
+
+PCL 点云库包括以下模块:
+
+-   Filters
+    -   点云滤波, 如降采样, 过滤噪音离群点等
+-   Features
+    -   点云特征, 比如局部点云的法线, 弯曲度等
+-   Keypoints
+    -   点云关键点
+-   Registration
+    -   点云配准
+-   KdTree
+    -   Kd树
+-   Octree
+    -   八叉树
+-   Segmentation
+    -   点云分割
+-   Sample Consensus
+    -   样本一致性 如[RANSAC](https://zhuanlan.zhihu.com/p/402727549) 
+-   Surface
+    -   点云表面重建
+-   Range Image
+    -   深度图
+-   IO
+    -   点云输入输出, 如读写PCD
+-   Visualization
+    -   点云可视化
+-   Common
+    -   PCL的通用模块
+-   Search
+    -   点云搜索库
+-   Binaries
+    -   常用的PCL工具, 如pcl_viewer
+
+### Getting Started / Basic Structures
+
+-   PointCloud 
+    -   organized point cloud 
+        -   表示像图片一样分为行列的点数据
+    -   projectable point cloud
+        -   可以通过相机模型转换为图像UV坐标
+        -   $u = fx/z, v = fy/z$
+    -   `width (int)`
+        -   可以指代 organized point cloud 的一行点数量, 即宽度
+        -   可以指代 unorganized point cloud 的点总数
+    -   `height (int)`
+        -   可以指代 organized point cloud 的一列点数量, 即高度
+        -   unorganized point cloud 时设置为1
+    -   `points (std::vector<PointT>)`
+        -   保存点云中所有的点
+    -   `is_dense (bool)`
+        -   表示所有点的数据都是有限的, finit (true),  Inf/NaN (fasle)
+    -   `sensor_origin_ (Eigen::Vector4f)`
+        -   点云传感器位姿 translation
+    -   `sensor_orientation_ (Eigen::Quaternionf)`
+        -   点云传感器位姿 orientation
+    -   `is_Organized()`
+        -   判断是否是 organized point cloud
+
+
+
+### Using PCL in your own project
+
+-   CMakeLists.txt 指定 PCL 安装位置
+
+    ```cmake
+    find_package(PCL 1.9.1 REQUIRED COMPONENTS common io
+        PATHS "/home/shan/App/pcl/pcl-pcl-1.9.1/build/installed"
+        NO_DEFAULT_PATH
+    )
+    ```
+
+-   `error while loading shared libraries: libvtkCommonMisc-8.2.so.1`
+
+    ```bash
+    # 方法1: 将 /usr/local/lib 加入到 /etc/ld.so.conf, 然后执行ldconfig
+    sudo chmod 777 /etc/ld.so.conf
+    sudo echo "/usr/local/lib" >> /etc/ld.so.conf
+    sudo ldconfig
+    
+    # 方法2: 临时添加到 LD_LIBRARY_PATH, 在 .zshrc 中添加以下内容
+    export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+    
+    ```
+
+    
