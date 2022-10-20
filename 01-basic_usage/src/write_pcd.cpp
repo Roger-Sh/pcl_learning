@@ -7,16 +7,16 @@ int main()
     pcl::PointCloud<pcl::PointXYZ> cloud;
 
     // Fill in the cloud data
-    cloud.width = 5;
+    cloud.width = 100;
     cloud.height = 1;
     cloud.is_dense = false;
     cloud.resize(cloud.width * cloud.height);
 
     for (auto &point : cloud)
     {
-        point.x = 1024 * rand() / (RAND_MAX + 1.0f);
-        point.y = 1024 * rand() / (RAND_MAX + 1.0f);
-        point.z = 1024 * rand() / (RAND_MAX + 1.0f);
+        point.x = 10.0 * rand() / (RAND_MAX + 1.0f);
+        point.y = 10.0 * rand() / (RAND_MAX + 1.0f);
+        point.z = 5.0 * rand() / (RAND_MAX + 1.0f);
     }
 
     pcl::io::savePCDFileASCII("test_pcd.pcd", cloud);
