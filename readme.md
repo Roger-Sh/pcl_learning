@@ -192,3 +192,437 @@ PCL 点云库包括以下模块:
 -   example: `write_pcd.cpp`
 
 ### Using a matrix to transform a point cloud
+
+-   example: `matrix_transform.cpp`
+
+-   转换一个点或一个向量
+
+    ```bash
+    # 点 添加1在末尾
+    [10, 5, 0,  1] * 4x4_transformation_matrix
+    # 向量 添加0在末尾
+    [3,  0, -1, 0] * 4x4_transformation_matrix
+    ```
+
+    
+
+## Advanced Usage
+
+### Adding your own custom PointT type
+
+#### PointT types available in PCL
+
+-   PointXYZ, 
+
+    -   member: float x, y, z
+
+    -   通过联合体实现 SSE alignment (数据地址对齐)
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        ```
+
+        
+
+-   PointXYZI
+
+    -   member: float x, y, z, intensity
+
+    -   单独设置一个联合体用于Intensity, 因为xyz的联合体最后一项data[3]会被设置为0/1用于transformation
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          struct
+          {
+            float intensity;
+          };
+          float data_c[4];
+        };
+        ```
+
+        
+
+-   PointXYZRGBA
+
+    -   member: float x, y, z; std::uint32_t rgba
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          union
+          {
+            struct
+            {
+              std::uint8_t b;
+              std::uint8_t g;
+              std::uint8_t r;
+              std::uint8_t a;
+            };
+            float rgb;
+          };
+          std::uint32_t rgba;
+        };
+        ```
+
+-   PointXYZRGB
+
+    -   same as PointXYZRGBA
+    -   member: float x, y, z; std::uint32_t rgba
+
+-   PointXY
+
+    -   member: float x, y
+
+    -   ```
+        struct
+        {
+          float x;
+          float y;
+        };
+        ```
+
+-   InterestPoint
+
+    -   member:  float x, y, z, strength
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          struct
+          {
+            float strength;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   Normal
+
+    -   member: float normal[3], curvature
+
+    -   ```
+        union
+        {
+          float data_n[4];
+          float normal[3];
+          struct
+          {
+            float normal_x;
+            float normal_y;
+            float normal_z;
+          };
+        }
+        union
+        {
+          struct
+          {
+            float curvature;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   PointNormal
+
+    -   member:  float x, y, z; float normal[3], curvature
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          float data_n[4];
+          float normal[3];
+          struct
+          {
+            float normal_x;
+            float normal_y;
+            float normal_z;
+          };
+        };
+        union
+        {
+          struct
+          {
+            float curvature;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   PointXYZRGBNormal
+
+    -   member: float x, y, z, normal[3], curvature; std::uint32_t rgba
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          float data_n[4];
+          float normal[3];
+          struct
+          {
+            float normal_x;
+            float normal_y;
+            float normal_z;
+          };
+        }
+        union
+        {
+          struct
+          {
+            union
+            {
+              union
+              {
+                struct
+                {
+                  std::uint8_t b;
+                  std::uint8_t g;
+                  std::uint8_t r;
+                  std::uint8_t a;
+                };
+                float rgb;
+              };
+              std::uint32_t rgba;
+            };
+            float curvature;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   PointXYZINormal
+
+    -   member: float x, y, z, intensity, normal[3], curvature
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          float data_n[4];
+          float normal[3];
+          struct
+          {
+            float normal_x;
+            float normal_y;
+            float normal_z;
+          };
+        }
+        union
+        {
+          struct
+          {
+            float intensity;
+            float curvature;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   PointWithRange (depth map)
+
+    -   member: float x, y, z (union with float point[4]), range
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          struct
+          {
+            float range;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   PointWithViewpoint
+
+    -   member: float x, y, z, vp_x, vp_y, vp_z
+
+    -   ```
+        union
+        {
+          float data[4];
+          struct
+          {
+            float x;
+            float y;
+            float z;
+          };
+        };
+        union
+        {
+          struct
+          {
+            float vp_x;
+            float vp_y;
+            float vp_z;
+          };
+          float data_c[4];
+        };
+        ```
+
+-   MomentInvariants
+
+    -   member: float j1, j2, j3
+
+    -   Simple point type holding the 3 moment invariants at a surface patch
+
+    -   ```
+        struct
+        {
+          float j1, j2, j3;
+        };
+        ```
+
+-   PrincipalRadiiRSD
+
+    -   member: float r_min, r_max
+
+    -   Simple point type holding the 2 RSD radii at a surface patch
+
+    -   ```
+        struct
+        {
+          float r_min, r_max;
+        };
+        ```
+
+-   Boundary
+
+    -   member: std::uint8_t boundary_point
+
+    -   Simple point type holding whether the point is lying on a surface boundary or not
+
+    -   ```
+        struct
+        {
+          std::uint8_t boundary_point;
+        };
+        ```
+
+-   PrincipalCurvatures
+
+    -   member: float principal_curvature[3], pc1, pc2
+    -   Simple point type holding the principal curvatures of a given point.
+
+-   PFHSignature125
+
+    -   member: float pfh[125]
+    -   Simple point type holding the PFH (Point Feature Histogram) of a given point. 
+
+-   FPFHSignature33
+
+    -   member: float fpfh[33]
+    -   Simple point type holding the FPFH (Fast Point Feature Histogram) of a given point.
+
+-   VFHSignature308
+
+    -   member: float vfh[308]
+    -   Simple point type holding the VFH (Viewpoint Feature Histogram) of a given point.
+
+-   Narf36
+
+    -   member: float x, y, z, roll, pitch, yaw; float descriptor[36]
+    -   Simple point type holding the NARF (Normally Aligned Radius Feature) of a given point.
+
+-   BorderDescription
+
+    -   member: int x, y; BorderTraits traits
+    -   Simple point type holding the border type of a given point.
+
+-   IntensityGradient
+
+    -   member: float gradient[3]
+    -   Simple point type holding the intensity gradient of a given point.
+
+-   Histogram
+
+    -   member: float histogram[N]
+    -   General purpose n-D histogram placeholder
+
+-   PointWithScale
+
+    -   member: float x, y, z, scale
+    -   Similar to PointXYZI
+
+-   PointSurfel
+
+    -   member: float x, y, z, normal[3], rgba, radius, confidence, curvature
+
