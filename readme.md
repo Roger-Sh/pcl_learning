@@ -626,3 +626,131 @@ PCL 点云库包括以下模块:
 
     -   member: float x, y, z, normal[3], rgba, radius, confidence, curvature
 
+
+
+#### Add new PointT type
+
+example: 02-advanced_usage/01_adding/custom_ptype.cpp
+
+
+
+### Writing a new PCL class
+
+example: 
+
+-   pcl/filters/include/pcl/filters/bilateral.h
+-   pcl/filters/include/pcl/filters/impl/bilateral.hpp
+-   pcl/filters/src/bilateral.cpp
+
+
+
+## Feature
+
+### How 3D Features work in PCL
+
+-   just cartesian coordiantes is not enough
+-   other characteristics and metrics
+    -   intensity
+    -   surface remission
+    -   color
+-   good point feature representation 好的点云特征
+    -   rigid transformations
+    -   varying sampling density
+    -   noise
+
+-   KD-树搜索 [KD-Tree](https://zhuanlan.zhihu.com/p/529487972)
+    -   k-search
+        -   k nearst neighbors 
+    -   radius-search
+        -   all neast neightnors in a sphere of radius r
+    -   ranged k-search
+        -   k nearst neighbors in a range
+
+
+
+#### How to pass the input
+
+-   setInputCloud (PointCloudConstPtr &)
+    -   输入点云
+-   setIndices (IndicesConstPtr &)
+    -   输入索引, 用来指定需要操作的部分点云的索引
+-   setSearchSurface (PointCloudConstPtr &)
+    -   输入搜索范围, 用来作为Input点云的搜索面
+    -   比如通过关键点去计算整个点云的特征
+        -   原始点云通过 setSearchSurface() 输入
+        -   关键点通过 setInputCloud() 输入
+
+![image-20221021160941662](readme.assets/image-20221021160941662.png)
+
+
+
+#### An example for normal estimation
+
+-   example: 03_pcl_feature/01_normal_estimation.cpp
+
+
+
+### Estimating Surface Normals in a PointCloud
+
+通过最小二乘的原理, 可以使用 PCA 来求解 covariance matrix 获得 eigen value 和 eigen vector 来求得法向量 normal, 选择最小特征值对应的特征向量，并进行单位归一化，则该向量为点云法向量
+
+```cpp
+// Placeholder for the 3x3 covariance matrix at each surface patch
+Eigen::Matrix3f covariance_matrix;
+// 16-bytes aligned placeholder for the XYZ centroid of a surface patch
+Eigen::Vector4f xyz_centroid;
+
+// Estimate the XYZ centroid
+compute3DCentroid (cloud, xyz_centroid);
+
+// Compute the 3x3 covariance matrix
+computeCovarianceMatrix (cloud, xyz_centroid, covariance_matrix);
+```
+
+需要注意法向量的正反方向, 通过设置 viewpoint 可以统一法向量的方向
+
+```cpp
+flipNormalTowardsViewpoint (
+    const PointT &point, float vp_x, float vp_y, float vp_z, Eigen::Vector4f &normal);
+```
+
+计算法向量时需要选择 k 个最近点 或 r 搜索半径, 这决定了法向量的计算结果, 下图左是较小的k/r, 右是太大的k/r
+
+![image-20221021180126715](readme.assets/image-20221021180126715.png)
+
+计算法向量的伪代码
+
+```pseudocode
+for each point p in cloud P
+
+  1. get the nearest neighbors of p
+
+  2. compute the surface normal n of p
+
+  3. check if n is consistently oriented towards the viewpoint and flip otherwise
+```
+
+设置视角点
+
+```cpp
+setViewPoint (float vpx, float vpy, float vpz);
+```
+
+计算单个点的法向量
+
+```cpp
+computePointNormal (
+    const pcl::PointCloud<PointInT> &cloud, 
+    const std::vector<int> &indices, 
+    Eigen::Vector4f &plane_parameters, 
+    float &curvature);
+```
+
+使用 OpenMP 加速 normal estimation
+
+-   pcl::NormalEstimationOMP
+
+
+
+### Normal Estimation Using Integral Images
+
