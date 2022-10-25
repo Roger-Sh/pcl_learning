@@ -915,10 +915,34 @@ computePointNormal (
 
 example
 
--   PassThrough: 01_filter_passThrough.cpp
+-   PassThrough: 
+    -   example: 01_filter_passThrough.cpp
     -   可以设置 filter limit negative
--   VoxelGrid: 02_filter_voxelgrid.cpp
+-   VoxelGrid: 
+    -   example: 02_filter_voxelgrid.cpp
     -   降采样
     -   设置采样格子大小
 
--   
+-   StatisticalOutlierRemoval
+    -   example: 03_filter_StatisticalOutlierRemoval.cpp
+    -   设置搜索范围K和标准差倍数, 在这个标准差外面的点会被标记为Outlier
+    -   可以设置 filter negative, 保存 outlier
+-   RadiusOutlierRemoval
+    -   example: 04_filter_RadiusOutlierRemoval.cpp
+    -   半径搜索过滤， 通过设置半径搜索范围内的K个邻点数量来判断是否是outlier
+-   ConditionalRemoval
+    -   example: 05_filter_ConditionalRemoval.cpp
+    -   条件过滤，比较灵活地设置各种过滤条件
+
+-   BilateralFilter
+    -   example: 06_filter_BilateralFilter.cpp
+    -   一种非线性滤波，可以达到保持边缘的同时对图像进行平滑的效果
+    -   时间复杂度较高，大的点云不适合
+        -   只适用于有序点云
+-   ProjectInliers
+    -   example: 07_filter_ProjectInliers.cpp
+    -   对点云进行投影，示例中将点云投影到XY平面上
+
+-   ExtractIndices
+    -   exmaple: 08_filter_ExtractIndices.cpp
+    -   通过segmentation获取对应的indices, 通过indices对点云进行分割
