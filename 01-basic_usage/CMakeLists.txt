@@ -24,3 +24,7 @@ target_link_libraries(write_pcd ${PCL_LIBRARIES})
 add_executable(matrix_transform src/matrix_transform.cpp)
 target_link_libraries(matrix_transform ${PCL_LIBRARIES})
 
+# view_pcd
+add_executable(view_pcd src/view_pcd.cpp)
+target_link_libraries(view_pcd ${PCL_LIBRARIES})
+

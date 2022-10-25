@@ -644,6 +644,28 @@ example:
 
 
 
+## Visualization
+
+example
+
+-   01_simple_pcd_viewer.cpp
+    -   简单的 pcd viewer
+-   02_multithread_pcd_viewer.cpp
+    -   多线程的 pcd viewer
+-   03_range_image_viewer.cpp
+    -   点云转化为深度图, 并可视化点云和深度图
+    -   效果与预期不符, 可能是视角的问题
+-   04_pcl_visualizer.cpp
+    -   实现给点云上色, 显示法线, 添加形状, 多视图, 键鼠交互等
+
+
+
+
+
+
+
+
+
 ## Feature
 
 ### How 3D Features work in PCL
@@ -691,6 +713,8 @@ example:
 
 
 ### Estimating Surface Normals in a PointCloud
+
+-   example: 03_pcl_feature/01_normal_estimation.cpp
 
 通过最小二乘的原理, 可以使用 PCA 来求解 covariance matrix 获得 eigen value 和 eigen vector 来求得法向量 normal, 选择最小特征值对应的特征向量，并进行单位归一化，则该向量为点云法向量
 
@@ -753,4 +777,143 @@ computePointNormal (
 
 
 ### Normal Estimation Using Integral Images
+
+-   example: 03_pcl_feature/02_normal_estimation_using_integral_images.cpp
+
+
+
+
+
+### Point Feature Histograms (PFH) descriptors
+
+-   PFH 点特征直方图
+
+    -   只有法线不足以表现点云的细节特征
+
+    -   PFH 通过使用多维的直方图来生成某点周围的平均曲率来表现某点的K个邻点的几何关系
+
+        ![image-20221024101417703](readme.assets/image-20221024101417703.png)
+
+    -   对某点的K个邻点, 前提是他们的法向量已知, 我们需要两两计算两点以及他们的法线之间的差距, 首先在每两个点之间设定一个坐标系UVW
+
+        ![image-20221024101607431](readme.assets/image-20221024101607431.png)
+        $$
+        \begin{aligned}
+        \mathrm{\boldsymbol{u}} &=\boldsymbol{n}_s \\
+        \mathrm{\boldsymbol{v}} &=\mathrm{\boldsymbol{u}} \times \frac{\left(\boldsymbol{p}_t-\boldsymbol{p}_s\right)}{\left\|\boldsymbol{p}_t-\boldsymbol{p}_s\right\|_2} \\
+        \mathrm{\boldsymbol{w}} &=\mathrm{\boldsymbol{u}} \times \mathrm{\boldsymbol{v}}
+        \end{aligned}
+        $$
+        
+-   通过UVW计算两个点之间的四个特征 $(\alpha, \phi, \theta, d)$, 如此可将两个点的坐标与法线信息从(3+3)x2=12个减少到4个
+        $$
+        \begin{aligned}
+        \alpha &=\mathbf{v} \cdot \boldsymbol{n}_t \\
+        \phi &=\mathbf{u} \cdot \frac{\left(\boldsymbol{p}_t-\boldsymbol{p}_s\right)}{d} \\
+        \theta &=\arctan \left(\mathbf{w} \cdot \boldsymbol{n}_t, \mathbf{u} \cdot \boldsymbol{n}_t\right) \\
+        d &= \left\|\boldsymbol{p}_t-\boldsymbol{p}_s\right\|_2
+        \end{aligned}
+        $$
+        
+    -   单独计算两个点的PFH
+
+        -   ```c++
+        computePairFeatures (const Eigen::Vector4f &p1, const Eigen::Vector4f &n1,
+                                 const Eigen::Vector4f &p2, const Eigen::Vector4f &n2,
+                                 float &f1, float &f2, float &f3, float &f4);
+            ```
+    
+            
+
+    -   将以上计算的四种特征, 每种都分为b份, 并画成直方图, 就是PFH的完整表达
+
+-   example:  03_pcl_feature/03_pfh_estimation.cpp
+
+-   Pseudo code
+
+    ```pseudocode
+    for each point p in cloud P
+      1. get the nearest neighbors of p
+      2. for each pair of neighbors, compute the three angular values
+      3. bin all the results in an output histogram
+    ```
+
+-   计算点云中单个点的PFH
+
+    ```c++
+    computePointPFHSignature (
+        const pcl::PointCloud<PointInT> &cloud,
+    	const pcl::PointCloud<PointNT> &normals,
+    	const std::vector<int> &indices,
+    	int nr_split,
+    	Eigen::VectorXf &pfh_histogram);
+    ```
+
+-   计算PFH之前最好检查一下数据是否finit
+
+
+
+
+
+### Fast Point Feature Histograms (FPFH) descriptors
+
+-   传统PFH算法的时间复杂度 $O(nk^2)$, 非常耗时
+
+-   FPFH 的时间复杂度为 $O(nk)$
+
+    -   Step1: 计算点云中每个查询点 $p_q$ 与其K个邻点的 $\alpha, \phi, \theta$, 这步被称为 Simplified Point Feature Histogram (SPFH)
+
+    -   Sept2: 对于每个点, 重新确定K个邻点, 使用相邻的 $p_q$ 的 SPFH值用来加权, 权重 $w_i$ 表示查询点 $p_q$ 与相邻点 $p_i$ 之间的某个度量距离
+        $$
+        F P F H\left(\boldsymbol{p}_q\right)=S P F H\left(\boldsymbol{p}_q\right)+\frac{1}{k} \sum_{i=1}^k \frac{1}{\omega_i} \cdot S P F H\left(\boldsymbol{p}_i\right)
+        $$
+        
+
+-   FPFH vs PFH
+
+    -   FPFH 没有完全覆盖PFH的数据
+    -   FPFH 还包括一些在r范围外的数据
+    -   FPFH 时间复杂度比 PFH 小很多, 可以实现实时应用
+
+-   下图中红色线表示第一次 $p_q$ 与其邻点的SPFH值, 随后其邻点也同样进行该操作, 表示为图中的五个圈, 随后 $p_q$ 再一次计算与其邻点的SPFH值, 但这次要同样考虑其邻点的SPFH值, 
+
+    ![image-20221024120609035](readme.assets/image-20221024120609035.png)
+
+-   Pseudo Code
+
+    ```pseudocode
+    for each point p in cloud P
+    	step 1:
+    		1. get the nearest neighbors of p
+    		2. for each pair of p, p_i (where p_i is a neighbor of p, compute the three angular values
+    		3. bin all the results in an output SPFH histogram
+    	step 2:
+    		1. get the nearest neighbors of p
+    		2. use each SPFH of p with a weighting scheme to assemble the FPFH p:
+    ```
+
+    
+
+-   check NAN/Infinite before **FPFHEstimation**
+-   spedding FPFH with OpenMP
+
+
+
+
+
+### Viewpoint Feature Histogram (VFH)
+
+-   VFH 是一种新颖的特征方法, 用于点云识别和 6Dof 姿态估计
+
+-   VFH 在 FPFH的基础上, 通过统计视角点与各点的角度, 和各点的法向量之间的角度差
+
+    ![image-20221024133740373](readme.assets/image-20221024133740373.png)
+
+    ![image-20221024133723256](readme.assets/image-20221024133723256.png)
+
+    ![image-20221024133823778](readme.assets/image-20221024133823778.png)
+
+
+
+
 

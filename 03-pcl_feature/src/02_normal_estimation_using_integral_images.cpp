@@ -6,6 +6,13 @@
 
 int main()
 {
+    /**
+     * @brief 与基于邻域的法线估计方法NormalEstimation相比，
+     * 基于积分图的方法IntegralImageNormalEstimation，
+     * 在同一份数据情况下，相对会快一些，但需注意，基于积分图的方法只能输入有序点云；
+     */
+
+
     // load point cloud
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::io::loadPCDFile("../pcd/table_scene_mug_stereo_textured.pcd", *cloud);

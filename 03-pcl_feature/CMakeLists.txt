@@ -24,3 +24,15 @@ target_link_libraries(01_normal_estimation ${PCL_LIBRARIES})
 # 02_normal_estimation_using_integral_images
 add_executable(02_normal_estimation_using_integral_images src/02_normal_estimation_using_integral_images.cpp)
 target_link_libraries(02_normal_estimation_using_integral_images ${PCL_LIBRARIES})
+
+# 03_pfh_estimation
+add_executable(03_pfh_estimation src/03_pfh_estimation.cpp)
+target_link_libraries(03_pfh_estimation ${PCL_LIBRARIES})
+
+# 04_fpfh_estimation
+add_executable(04_fpfh_estimation src/04_fpfh_estimation.cpp)
+target_link_libraries(04_fpfh_estimation ${PCL_LIBRARIES})
+
+# 05_vfh_estimation
+add_executable(05_vfh_estimation src/05_vfh_estimation.cpp)
+target_link_libraries(05_vfh_estimation ${PCL_LIBRARIES})
