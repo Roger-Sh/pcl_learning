@@ -660,12 +660,6 @@ example
 
 
 
-
-
-
-
-
-
 ## Feature
 
 ### How 3D Features work in PCL
@@ -917,3 +911,6 @@ computePointNormal (
 
 
 
+## Filter
+
+### Passthrough filter
