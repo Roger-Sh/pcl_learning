@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     // Fill in the cloud data
     pcl::PCDReader reader;
     // Replace the path below with the path where you saved your file
-    reader.read("../pcd/table_scene_lms400.pcd", *cloud); // Remember to download the file first!
+    reader.read("../../pcd/table_scene_lms400.pcd", *cloud); // Remember to download the file first!
 
     std::cerr << "PointCloud before filtering: " 
         << cloud->width * cloud->height
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
               << " data points (" << pcl::getFieldsList(*cloud_filtered) << ").";
 
     pcl::PCDWriter writer;
-    writer.write("../pcd/table_scene_lms400_downsampled.pcd", *cloud_filtered,
+    writer.write("../../pcd/table_scene_lms400_downsampled.pcd", *cloud_filtered,
                  Eigen::Vector4f::Zero(), Eigen::Quaternionf::Identity(), false);
 
     return (0);

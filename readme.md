@@ -913,4 +913,12 @@ computePointNormal (
 
 ## Filter
 
-### Passthrough filter
+example
+
+-   PassThrough: 01_filter_passThrough.cpp
+    -   可以设置 filter limit negative
+-   VoxelGrid: 02_filter_voxelgrid.cpp
+    -   降采样
+    -   设置采样格子大小
+
+-   

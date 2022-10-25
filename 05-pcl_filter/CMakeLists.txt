@@ -20,7 +20,7 @@ add_definitions(${PCL_DEFINITIONS})
 add_executable(01_filter_passThrough src/01_filter_passThrough.cpp)
 target_link_libraries(01_filter_passThrough ${PCL_LIBRARIES})
 
-# 02_filter_voxelgrid
-add_executable(02_filter_voxelgrid src/02_filter_voxelgrid.cpp)
-target_link_libraries(02_filter_voxelgrid ${PCL_LIBRARIES})
+# 02_filter_voxelGrid
+add_executable(02_filter_voxelGrid src/02_filter_voxelGrid.cpp)
+target_link_libraries(02_filter_voxelGrid ${PCL_LIBRARIES})
 
