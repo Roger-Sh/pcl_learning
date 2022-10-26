@@ -101,9 +101,9 @@
 
 
 
-## Basic Usage
+## 1 Basic Usage
 
-### PCL Walkthrough
+### 1.1 PCL Walkthrough
 
 PCL 点云库包括以下模块:
 
@@ -138,7 +138,7 @@ PCL 点云库包括以下模块:
 -   Binaries
     -   常用的PCL工具, 如pcl_viewer
 
-### Getting Started / Basic Structures
+### 1.2 Getting Started / Basic Structures
 
 -   PointCloud 
     -   organized point cloud 
@@ -165,7 +165,7 @@ PCL 点云库包括以下模块:
 
 
 
-### Using PCL in your own project
+### 1.3 Using PCL in your own project
 
 -   CMakeLists.txt 指定 PCL 安装位置
 
@@ -191,7 +191,7 @@ PCL 点云库包括以下模块:
 
 -   example: `write_pcd.cpp`
 
-### Using a matrix to transform a point cloud
+### 1.4 Using a matrix to transform a point cloud
 
 -   example: `matrix_transform.cpp`
 
@@ -206,9 +206,9 @@ PCL 点云库包括以下模块:
 
     
 
-## Advanced Usage
+## 2 Advanced Usage
 
-### Adding your own custom PointT type
+### 2.1 Adding your own custom PointT type
 
 #### PointT types available in PCL
 
@@ -634,7 +634,7 @@ example: 02-advanced_usage/01_adding/custom_ptype.cpp
 
 
 
-### Writing a new PCL class
+### 2.2 Writing a new PCL class
 
 example: 
 
@@ -644,7 +644,7 @@ example:
 
 
 
-## Visualization
+## 3 Visualization
 
 example
 
@@ -660,9 +660,9 @@ example
 
 
 
-## Feature
+## 4 Feature
 
-### How 3D Features work in PCL
+### 4.1 How 3D Features work in PCL
 
 -   just cartesian coordiantes is not enough
 -   other characteristics and metrics
@@ -684,7 +684,7 @@ example
 
 
 
-#### How to pass the input
+#### 4.1.1 How to pass the input
 
 -   setInputCloud (PointCloudConstPtr &)
     -   输入点云
@@ -700,13 +700,13 @@ example
 
 
 
-#### An example for normal estimation
+#### 4.1.2 An example for normal estimation
 
 -   example: 03_pcl_feature/01_normal_estimation.cpp
 
 
 
-### Estimating Surface Normals in a PointCloud
+### 4.2 Estimating Surface Normals in a PointCloud
 
 -   example: 03_pcl_feature/01_normal_estimation.cpp
 
@@ -770,7 +770,7 @@ computePointNormal (
 
 
 
-### Normal Estimation Using Integral Images
+### 4.3 Normal Estimation Using Integral Images
 
 -   example: 03_pcl_feature/02_normal_estimation_using_integral_images.cpp
 
@@ -778,7 +778,7 @@ computePointNormal (
 
 
 
-### Point Feature Histograms (PFH) descriptors
+### 4.4 Point Feature Histograms (PFH) descriptors
 
 -   PFH 点特征直方图
 
@@ -798,7 +798,7 @@ computePointNormal (
         \mathrm{\boldsymbol{w}} &=\mathrm{\boldsymbol{u}} \times \mathrm{\boldsymbol{v}}
         \end{aligned}
         $$
-        
+    
 -   通过UVW计算两个点之间的四个特征 $(\alpha, \phi, \theta, d)$, 如此可将两个点的坐标与法线信息从(3+3)x2=12个减少到4个
         $$
         \begin{aligned}
@@ -812,7 +812,7 @@ computePointNormal (
     -   单独计算两个点的PFH
 
         -   ```c++
-        computePairFeatures (const Eigen::Vector4f &p1, const Eigen::Vector4f &n1,
+            computePairFeatures (const Eigen::Vector4f &p1, const Eigen::Vector4f &n1,
                                  const Eigen::Vector4f &p2, const Eigen::Vector4f &n2,
                                  float &f1, float &f2, float &f3, float &f4);
             ```
@@ -849,7 +849,7 @@ computePointNormal (
 
 
 
-### Fast Point Feature Histograms (FPFH) descriptors
+### 4.5 Fast Point Feature Histograms (FPFH) descriptors
 
 -   传统PFH算法的时间复杂度 $O(nk^2)$, 非常耗时
 
@@ -895,7 +895,7 @@ computePointNormal (
 
 
 
-### Viewpoint Feature Histogram (VFH)
+### 4.6 Viewpoint Feature Histogram (VFH)
 
 -   VFH 是一种新颖的特征方法, 用于点云识别和 6Dof 姿态估计
 
@@ -911,7 +911,7 @@ computePointNormal (
 
 
 
-## Filter
+## 5 Filter
 
 example
 
@@ -946,3 +946,89 @@ example
 -   ExtractIndices
     -   exmaple: 08_filter_ExtractIndices.cpp
     -   通过segmentation获取对应的indices, 通过indices对点云进行分割
+
+
+
+
+
+## 6 Recognition
+
+### 6.1 点云识别任务的特点
+
+-   为每个点分配一个语义标记。点云的分类是将点云分类到不同的点云集。同一个点云集具有相似或相同的属性，例如地面、树木、人等。也叫做点云语义分割
+-   有label数据
+
+
+
+### 6.2 3D Object Recognition based on Correspondence Grouping
+
+-   简介
+    -   使用 Correspondence Grouping algorithms (对应分组算法) 实现 3D Object Recognition
+    -   可视化显示场景中可能存在的模型, 并得出其6DOF转换矩阵
+-   Code:
+    -   exmaple: 06-PCL_recognition/01_recognition_CorrespondenceGrouping.cpp
+-   Demo流程
+    1.  解析命令, 加载场景点云与物体点云
+    2.  计算法线
+        -   获得
+            -   场景点云法线
+            -   物体点云法线
+    3.  通过 UniformSampling 获得点云关键点
+        -   均匀下采样
+            -   对点云数据创建一个三维体素栅格，然后，在每个体素保留一个最接近体素中心的点，代替体素中所有点
+        -   获得
+            -   场景 uniform sampling 关键点
+            -   物体 uniform sampling 关键点
+    4.  通过SHOTEstimationOMP计算关键点描述子 [SHOT 描述子](https://cloud.tencent.com/developer/article/1475995)
+        -   获得
+            -   场景 SHOT352 描述子 
+            -   物体 SHOT352 描述子
+    5.  通过 KdTree 和描述子寻找关键点之间的匹配关系
+        -   匹配距离小于 0.25, (匹配距离在0-1之间)
+        -   保存匹配关系为 pcl::Correspondence
+    6.  通过Hough3D法进行点云间的配准
+        1.  通过 BOARDLocalReferenceFrameEstimation 计算 reference frame
+            -   获得
+                -   场景 reference frame
+                -   物体 reference frame
+        2.  通过 Hough3DGrouping 实现点云间的识别(配准), 
+            -   获得
+                -   物体在场景中的转换矩阵
+                -   聚类后的点云匹配关系
+    7.  可视化
+        -   物体在场景中转换后的点云
+        -   物体点云与场景的对应关系
+
+
+
+### 6.3 Tutorial: Hypothesis Verification for 3D Object Recognition
+
+-   简介
+    -   验证杂乱和严重遮挡的 3D 场景中的模型假设
+
+
+
+
+
+## 7 Segmentation
+
+### 7.1 点云分割任务的特点
+
+-   根据空间、几何和纹理等特征点进行划分，同一划分内的点云拥有相似的特征。点云分割的目的是分块，从而便于单独处理。
+-   没有label数据?
+
+
+
+
+
+
+
+
+
+
+
+## 8 Registration
+
+### 8.1 点云配准任务的特点
+
+-   通过计算得到完美的坐标变换，将处于不同视角下的点云数据经过旋转平移等刚性变换统一整合到指定坐标系之下的过程
