@@ -24,6 +24,6 @@ add_executable(01_adding_custom_ptype src/01_adding_custom_ptype.cpp)
 target_link_libraries(01_adding_custom_ptype ${PCL_LIBRARIES})
 
 # bilateral
-add_executable(bilateral src/bilateral.cpp)
-target_link_libraries(bilateral ${PCL_LIBRARIES})
+# add_executable(bilateral src/bilateral.cpp)
+# target_link_libraries(bilateral ${PCL_LIBRARIES})
 
