@@ -1001,18 +1001,103 @@ example
 
 
 
-### 6.3 Tutorial: Hypothesis Verification for 3D Object Recognition
+### 6.3 Implicit Shape Model 隐式形状模型
+
+-   [Implicit Shape Model](https://pcl.readthedocs.io/projects/tutorials/en/master/implicit_shape_model.html#implicit-shape-model)
+
+-   主要是通过训练数据学习到一类物体点云的特征, 并通过学习到的特征去**判断新的物体的点云中心**
+
+-   训练步骤
+
+    1.  对训练集点云 voxelgrid 降采样作为关键点
+    2.  对关键点提取FPFH特征
+    3.  对提取到的特征进行K-means聚类, 获得视觉特征词(visual word)字典(即聚类后的每一类特征), 每个特征都是对应一类特征的实例(instance)
+    4.  计算每个关键点到点云质心的距离
+    5.   针对每个视觉特征词(visual word), 计算其统计权重
+        -   ![image-20221102160544130](readme.assets/image-20221102160544130.png)
+    6.  对每个特征点计算学习权重
+        -   ![image-20221102161130381](readme.assets/image-20221102161130381.png)
+
+-   识别步骤
+
+    1.  获取关键点
+    2.  获取关键点的特征(FPFH)
+    3.  对每个关键点的特征, 寻找其最近的视觉特征词(visual word)
+    4.  对每个特征, 寻找到对应的视觉特征词后(visual word), 计算对应类别和视觉特征词的权重
+        -   ![image-20221102162916523](readme.assets/image-20221102162916523.png)
+    5.  通过NMS分析第四部的结果
+
+    
+
+
+
+
+
+
+
+### 6.4 Hypothesis Verification for 3D Object Recognition
 
 -   简介
     -   验证杂乱和严重遮挡的 3D 场景中的模型假设
+        -   匹配描述子
+        -   Correspondence Grouping
+        -   确认各个物体假设的度量距离
+        -   减少False Positive 的可能
+        -   [Hypothesis Verification](https://pcl.readthedocs.io/projects/tutorials/en/master/global_hypothesis_verification.html#global-hypothesis-verification)
+    -   ![image-20221102180307384](readme.assets/image-20221102180307384.png)
 
 
 
 
 
-## 7 Segmentation
+## 7 Registration
 
-### 7.1 点云分割任务的特点
+### 7.1 点云配准任务的特点
+
+-   通过计算得到完美的坐标变换，将处于不同视角下的点云数据经过旋转平移等刚性变换统一整合到指定坐标系之下的过程
+
+    -   关键点匹配是点云配准的关键任务
+
+-   点云配准一般流程
+
+    ![image-20221102181803187](readme.assets/image-20221102181803187.png)
+
+    -   关键点提取
+        -   NARF, SIFT, FAST
+    -   关键点描述子提取
+        -   NARF, FPFH, BRIEF, SIFT
+    -   关键点匹配
+        -   点匹配 (使用点坐标)
+            -   brute force matching
+            -   kd-tree nearest neighbor search (FLANN)
+            -   searching in the image space of organized data
+            -   searching in the index space of organized data
+        -   特征匹配
+            -   brute force matching and
+            -   kd-tree nearest neighbor search (FLANN).
+            -   两种特征匹配的策略
+                -   Direct correspondence estimation
+                    -   A 匹配 B
+                -   “Reciprocal” correspondence estimation
+                    -   A 匹配 B 之后, 再通过他们的交集 B 匹配 A
+
+    -   去除错误匹配
+        -   RANSAC 随机一致性模型
+        -   使用一部分匹配的结果
+
+    -   估计转换矩阵
+        -   优化方法
+        -   SVD
+        -   ICP
+        -   ...
+
+
+
+
+
+## 8 Segmentation
+
+### 8.1 点云分割任务的特点
 
 -   根据空间、几何和纹理等特征点进行划分，同一划分内的点云拥有相似的特征。点云分割的目的是分块，从而便于单独处理。
 -   没有label数据?
@@ -1027,8 +1112,3 @@ example
 
 
 
-## 8 Registration
-
-### 8.1 点云配准任务的特点
-
--   通过计算得到完美的坐标变换，将处于不同视角下的点云数据经过旋转平移等刚性变换统一整合到指定坐标系之下的过程

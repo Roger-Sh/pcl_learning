@@ -234,6 +234,162 @@ view_pcd/fast:
 .PHONY : 05_vfh_estimation/fast
 
 #=============================================================================
+# Target rules for targets named 01_simple_pcd_viewer
+
+# Build rule for target.
+01_simple_pcd_viewer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 01_simple_pcd_viewer
+.PHONY : 01_simple_pcd_viewer
+
+# fast build rule for target.
+01_simple_pcd_viewer/fast:
+	$(MAKE) $(MAKESILENT) -f 04-pcl_visualization/CMakeFiles/01_simple_pcd_viewer.dir/build.make 04-pcl_visualization/CMakeFiles/01_simple_pcd_viewer.dir/build
+.PHONY : 01_simple_pcd_viewer/fast
+
+#=============================================================================
+# Target rules for targets named 02_multithread_pcd_viewer
+
+# Build rule for target.
+02_multithread_pcd_viewer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 02_multithread_pcd_viewer
+.PHONY : 02_multithread_pcd_viewer
+
+# fast build rule for target.
+02_multithread_pcd_viewer/fast:
+	$(MAKE) $(MAKESILENT) -f 04-pcl_visualization/CMakeFiles/02_multithread_pcd_viewer.dir/build.make 04-pcl_visualization/CMakeFiles/02_multithread_pcd_viewer.dir/build
+.PHONY : 02_multithread_pcd_viewer/fast
+
+#=============================================================================
+# Target rules for targets named 03_range_image_viewer
+
+# Build rule for target.
+03_range_image_viewer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 03_range_image_viewer
+.PHONY : 03_range_image_viewer
+
+# fast build rule for target.
+03_range_image_viewer/fast:
+	$(MAKE) $(MAKESILENT) -f 04-pcl_visualization/CMakeFiles/03_range_image_viewer.dir/build.make 04-pcl_visualization/CMakeFiles/03_range_image_viewer.dir/build
+.PHONY : 03_range_image_viewer/fast
+
+#=============================================================================
+# Target rules for targets named 04_pcl_visualizer
+
+# Build rule for target.
+04_pcl_visualizer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 04_pcl_visualizer
+.PHONY : 04_pcl_visualizer
+
+# fast build rule for target.
+04_pcl_visualizer/fast:
+	$(MAKE) $(MAKESILENT) -f 04-pcl_visualization/CMakeFiles/04_pcl_visualizer.dir/build.make 04-pcl_visualization/CMakeFiles/04_pcl_visualizer.dir/build
+.PHONY : 04_pcl_visualizer/fast
+
+#=============================================================================
+# Target rules for targets named 01_filter_PassThrough
+
+# Build rule for target.
+01_filter_PassThrough: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 01_filter_PassThrough
+.PHONY : 01_filter_PassThrough
+
+# fast build rule for target.
+01_filter_PassThrough/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/01_filter_PassThrough.dir/build.make 05-pcl_filter/CMakeFiles/01_filter_PassThrough.dir/build
+.PHONY : 01_filter_PassThrough/fast
+
+#=============================================================================
+# Target rules for targets named 02_filter_VoxelGrid
+
+# Build rule for target.
+02_filter_VoxelGrid: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 02_filter_VoxelGrid
+.PHONY : 02_filter_VoxelGrid
+
+# fast build rule for target.
+02_filter_VoxelGrid/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/02_filter_VoxelGrid.dir/build.make 05-pcl_filter/CMakeFiles/02_filter_VoxelGrid.dir/build
+.PHONY : 02_filter_VoxelGrid/fast
+
+#=============================================================================
+# Target rules for targets named 03_filter_StatisticalOutlierRemoval
+
+# Build rule for target.
+03_filter_StatisticalOutlierRemoval: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 03_filter_StatisticalOutlierRemoval
+.PHONY : 03_filter_StatisticalOutlierRemoval
+
+# fast build rule for target.
+03_filter_StatisticalOutlierRemoval/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/03_filter_StatisticalOutlierRemoval.dir/build.make 05-pcl_filter/CMakeFiles/03_filter_StatisticalOutlierRemoval.dir/build
+.PHONY : 03_filter_StatisticalOutlierRemoval/fast
+
+#=============================================================================
+# Target rules for targets named 04_filter_RadiusOutlierRemoval
+
+# Build rule for target.
+04_filter_RadiusOutlierRemoval: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 04_filter_RadiusOutlierRemoval
+.PHONY : 04_filter_RadiusOutlierRemoval
+
+# fast build rule for target.
+04_filter_RadiusOutlierRemoval/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/04_filter_RadiusOutlierRemoval.dir/build.make 05-pcl_filter/CMakeFiles/04_filter_RadiusOutlierRemoval.dir/build
+.PHONY : 04_filter_RadiusOutlierRemoval/fast
+
+#=============================================================================
+# Target rules for targets named 05_filter_ConditionalRemoval
+
+# Build rule for target.
+05_filter_ConditionalRemoval: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 05_filter_ConditionalRemoval
+.PHONY : 05_filter_ConditionalRemoval
+
+# fast build rule for target.
+05_filter_ConditionalRemoval/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/05_filter_ConditionalRemoval.dir/build.make 05-pcl_filter/CMakeFiles/05_filter_ConditionalRemoval.dir/build
+.PHONY : 05_filter_ConditionalRemoval/fast
+
+#=============================================================================
+# Target rules for targets named 06_filter_BilateralFilter
+
+# Build rule for target.
+06_filter_BilateralFilter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 06_filter_BilateralFilter
+.PHONY : 06_filter_BilateralFilter
+
+# fast build rule for target.
+06_filter_BilateralFilter/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/06_filter_BilateralFilter.dir/build.make 05-pcl_filter/CMakeFiles/06_filter_BilateralFilter.dir/build
+.PHONY : 06_filter_BilateralFilter/fast
+
+#=============================================================================
+# Target rules for targets named 07_filter_ProjectInliers
+
+# Build rule for target.
+07_filter_ProjectInliers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 07_filter_ProjectInliers
+.PHONY : 07_filter_ProjectInliers
+
+# fast build rule for target.
+07_filter_ProjectInliers/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/07_filter_ProjectInliers.dir/build.make 05-pcl_filter/CMakeFiles/07_filter_ProjectInliers.dir/build
+.PHONY : 07_filter_ProjectInliers/fast
+
+#=============================================================================
+# Target rules for targets named 08_filter_ExtractIndices
+
+# Build rule for target.
+08_filter_ExtractIndices: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 08_filter_ExtractIndices
+.PHONY : 08_filter_ExtractIndices
+
+# fast build rule for target.
+08_filter_ExtractIndices/fast:
+	$(MAKE) $(MAKESILENT) -f 05-pcl_filter/CMakeFiles/08_filter_ExtractIndices.dir/build.make 05-pcl_filter/CMakeFiles/08_filter_ExtractIndices.dir/build
+.PHONY : 08_filter_ExtractIndices/fast
+
+#=============================================================================
 # Target rules for targets named 01_recognition_CorrespondenceGrouping
 
 # Build rule for target.
@@ -246,6 +402,32 @@ view_pcd/fast:
 	$(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/build.make 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/build
 .PHONY : 01_recognition_CorrespondenceGrouping/fast
 
+#=============================================================================
+# Target rules for targets named 02_recognition_ImplicitShapeModel
+
+# Build rule for target.
+02_recognition_ImplicitShapeModel: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 02_recognition_ImplicitShapeModel
+.PHONY : 02_recognition_ImplicitShapeModel
+
+# fast build rule for target.
+02_recognition_ImplicitShapeModel/fast:
+	$(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build.make 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build
+.PHONY : 02_recognition_ImplicitShapeModel/fast
+
+#=============================================================================
+# Target rules for targets named 03_recognition_3DHypothesisVerification
+
+# Build rule for target.
+03_recognition_3DHypothesisVerification: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 03_recognition_3DHypothesisVerification
+.PHONY : 03_recognition_3DHypothesisVerification
+
+# fast build rule for target.
+03_recognition_3DHypothesisVerification/fast:
+	$(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build.make 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build
+.PHONY : 03_recognition_3DHypothesisVerification/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -255,12 +437,26 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... 01_adding_custom_ptype"
+	@echo "... 01_filter_PassThrough"
 	@echo "... 01_normal_estimation"
 	@echo "... 01_recognition_CorrespondenceGrouping"
+	@echo "... 01_simple_pcd_viewer"
+	@echo "... 02_filter_VoxelGrid"
+	@echo "... 02_multithread_pcd_viewer"
 	@echo "... 02_normal_estimation_using_integral_images"
+	@echo "... 02_recognition_ImplicitShapeModel"
+	@echo "... 03_filter_StatisticalOutlierRemoval"
 	@echo "... 03_pfh_estimation"
+	@echo "... 03_range_image_viewer"
+	@echo "... 03_recognition_3DHypothesisVerification"
+	@echo "... 04_filter_RadiusOutlierRemoval"
 	@echo "... 04_fpfh_estimation"
+	@echo "... 04_pcl_visualizer"
+	@echo "... 05_filter_ConditionalRemoval"
 	@echo "... 05_vfh_estimation"
+	@echo "... 06_filter_BilateralFilter"
+	@echo "... 07_filter_ProjectInliers"
+	@echo "... 08_filter_ExtractIndices"
 	@echo "... matrix_transform"
 	@echo "... view_pcd"
 	@echo "... write_pcd"

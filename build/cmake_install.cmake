@@ -47,6 +47,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/shan/Documents/pcl_learning/build/01-basic_usage/cmake_install.cmake")
   include("/home/shan/Documents/pcl_learning/build/02-advanced_usage/cmake_install.cmake")
   include("/home/shan/Documents/pcl_learning/build/03-pcl_feature/cmake_install.cmake")
+  include("/home/shan/Documents/pcl_learning/build/04-pcl_visualization/cmake_install.cmake")
+  include("/home/shan/Documents/pcl_learning/build/05-pcl_filter/cmake_install.cmake")
   include("/home/shan/Documents/pcl_learning/build/06-pcl_recognition/cmake_install.cmake")
 
 endif()

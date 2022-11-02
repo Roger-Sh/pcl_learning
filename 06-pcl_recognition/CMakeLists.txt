@@ -20,3 +20,10 @@ add_definitions(${PCL_DEFINITIONS})
 add_executable(01_recognition_CorrespondenceGrouping src/01_recognition_CorrespondenceGrouping.cpp)
 target_link_libraries(01_recognition_CorrespondenceGrouping ${PCL_LIBRARIES})
 
+# 02_recognition_ImplicitShapeModel
+add_executable(02_recognition_ImplicitShapeModel src/02_recognition_ImplicitShapeModel.cpp)
+target_link_libraries(02_recognition_ImplicitShapeModel ${PCL_LIBRARIES})
+
+# 03_recognition_3DHypothesisVerification
+add_executable(03_recognition_3DHypothesisVerification src/03_recognition_3DHypothesisVerification.cpp)
+target_link_libraries(03_recognition_3DHypothesisVerification ${PCL_LIBRARIES})

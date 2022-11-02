@@ -130,6 +130,34 @@ depend:
 	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/build.make 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/build
 .PHONY : 01_recognition_CorrespondenceGrouping/fast
 
+# Convenience name for target.
+06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/rule:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/rule
+.PHONY : 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/rule
+
+# Convenience name for target.
+02_recognition_ImplicitShapeModel: 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/rule
+.PHONY : 02_recognition_ImplicitShapeModel
+
+# fast build rule for target.
+02_recognition_ImplicitShapeModel/fast:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build.make 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build
+.PHONY : 02_recognition_ImplicitShapeModel/fast
+
+# Convenience name for target.
+06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/rule:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/rule
+.PHONY : 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/rule
+
+# Convenience name for target.
+03_recognition_3DHypothesisVerification: 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/rule
+.PHONY : 03_recognition_3DHypothesisVerification
+
+# fast build rule for target.
+03_recognition_3DHypothesisVerification/fast:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build.make 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build
+.PHONY : 03_recognition_3DHypothesisVerification/fast
+
 src/01_recognition_CorrespondenceGrouping.o: src/01_recognition_CorrespondenceGrouping.cpp.o
 .PHONY : src/01_recognition_CorrespondenceGrouping.o
 
@@ -154,6 +182,54 @@ src/01_recognition_CorrespondenceGrouping.cpp.s:
 	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/build.make 06-pcl_recognition/CMakeFiles/01_recognition_CorrespondenceGrouping.dir/src/01_recognition_CorrespondenceGrouping.cpp.s
 .PHONY : src/01_recognition_CorrespondenceGrouping.cpp.s
 
+src/02_recognition_ImplicitShapeModel.o: src/02_recognition_ImplicitShapeModel.cpp.o
+.PHONY : src/02_recognition_ImplicitShapeModel.o
+
+# target to build an object file
+src/02_recognition_ImplicitShapeModel.cpp.o:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build.make 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/src/02_recognition_ImplicitShapeModel.cpp.o
+.PHONY : src/02_recognition_ImplicitShapeModel.cpp.o
+
+src/02_recognition_ImplicitShapeModel.i: src/02_recognition_ImplicitShapeModel.cpp.i
+.PHONY : src/02_recognition_ImplicitShapeModel.i
+
+# target to preprocess a source file
+src/02_recognition_ImplicitShapeModel.cpp.i:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build.make 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/src/02_recognition_ImplicitShapeModel.cpp.i
+.PHONY : src/02_recognition_ImplicitShapeModel.cpp.i
+
+src/02_recognition_ImplicitShapeModel.s: src/02_recognition_ImplicitShapeModel.cpp.s
+.PHONY : src/02_recognition_ImplicitShapeModel.s
+
+# target to generate assembly for a file
+src/02_recognition_ImplicitShapeModel.cpp.s:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/build.make 06-pcl_recognition/CMakeFiles/02_recognition_ImplicitShapeModel.dir/src/02_recognition_ImplicitShapeModel.cpp.s
+.PHONY : src/02_recognition_ImplicitShapeModel.cpp.s
+
+src/03_recognition_3DHypothesisVerification.o: src/03_recognition_3DHypothesisVerification.cpp.o
+.PHONY : src/03_recognition_3DHypothesisVerification.o
+
+# target to build an object file
+src/03_recognition_3DHypothesisVerification.cpp.o:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build.make 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/src/03_recognition_3DHypothesisVerification.cpp.o
+.PHONY : src/03_recognition_3DHypothesisVerification.cpp.o
+
+src/03_recognition_3DHypothesisVerification.i: src/03_recognition_3DHypothesisVerification.cpp.i
+.PHONY : src/03_recognition_3DHypothesisVerification.i
+
+# target to preprocess a source file
+src/03_recognition_3DHypothesisVerification.cpp.i:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build.make 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/src/03_recognition_3DHypothesisVerification.cpp.i
+.PHONY : src/03_recognition_3DHypothesisVerification.cpp.i
+
+src/03_recognition_3DHypothesisVerification.s: src/03_recognition_3DHypothesisVerification.cpp.s
+.PHONY : src/03_recognition_3DHypothesisVerification.s
+
+# target to generate assembly for a file
+src/03_recognition_3DHypothesisVerification.cpp.s:
+	cd /home/shan/Documents/pcl_learning/build && $(MAKE) $(MAKESILENT) -f 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/build.make 06-pcl_recognition/CMakeFiles/03_recognition_3DHypothesisVerification.dir/src/03_recognition_3DHypothesisVerification.cpp.s
+.PHONY : src/03_recognition_3DHypothesisVerification.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -163,9 +239,17 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... 01_recognition_CorrespondenceGrouping"
+	@echo "... 02_recognition_ImplicitShapeModel"
+	@echo "... 03_recognition_3DHypothesisVerification"
 	@echo "... src/01_recognition_CorrespondenceGrouping.o"
 	@echo "... src/01_recognition_CorrespondenceGrouping.i"
 	@echo "... src/01_recognition_CorrespondenceGrouping.s"
+	@echo "... src/02_recognition_ImplicitShapeModel.o"
+	@echo "... src/02_recognition_ImplicitShapeModel.i"
+	@echo "... src/02_recognition_ImplicitShapeModel.s"
+	@echo "... src/03_recognition_3DHypothesisVerification.o"
+	@echo "... src/03_recognition_3DHypothesisVerification.i"
+	@echo "... src/03_recognition_3DHypothesisVerification.s"
 .PHONY : help
 
 

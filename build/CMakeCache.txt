@@ -42,6 +42,24 @@
 03-pcl_feature_SOURCE_DIR:STATIC=/home/shan/Documents/pcl_learning/03-pcl_feature
 
 //Value Computed by CMake
+04-pcl_visualization_BINARY_DIR:STATIC=/home/shan/Documents/pcl_learning/build/04-pcl_visualization
+
+//Value Computed by CMake
+04-pcl_visualization_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+04-pcl_visualization_SOURCE_DIR:STATIC=/home/shan/Documents/pcl_learning/04-pcl_visualization
+
+//Value Computed by CMake
+05-pcl_filter_BINARY_DIR:STATIC=/home/shan/Documents/pcl_learning/build/05-pcl_filter
+
+//Value Computed by CMake
+05-pcl_filter_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+05-pcl_filter_SOURCE_DIR:STATIC=/home/shan/Documents/pcl_learning/05-pcl_filter
+
+//Value Computed by CMake
 06-pcl_recognition_BINARY_DIR:STATIC=/home/shan/Documents/pcl_learning/build/06-pcl_recognition
 
 //Value Computed by CMake
@@ -793,7 +811,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
