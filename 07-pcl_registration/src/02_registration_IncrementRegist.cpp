@@ -29,12 +29,12 @@ typedef pcl::PointCloud<PointNormalT> PointCloudWithNormals;
  * @brief params for registration
  * 
  */
-double VoxelGridLeafSize(0.1);  // default: 0.05
-int NormEstKSearch(50);         // default: 30
-double ICPMaxDist(0.2);         // default: 0.1
-int ICPMaxInnerIteration(5);    // default: 2
-int ICPMaxExternIteration(30);  // default: 30
-double ICPEPS(1e-06);           // default: 1e-06
+double VoxelGridLeafSize(0.05);  // default: 0.05
+int NormEstKSearch(25);         // default: 30
+double ICPMaxDist(0.25);         // default: 0.1
+int ICPMaxInnerIteration(2);    // default: 2
+int ICPMaxExternIteration(90);  // default: 30
+double ICPEPS(1e-09);           // default: 1e-06
 
 
 /**

@@ -1114,15 +1114,11 @@ example: 07-pcl_registration_ICP.cpp
 
 
 
-7.3 How to incrementally register pairs of clouds
+### 7.3 How to incrementally register pairs of clouds
 
+example: 07-pcl_registration_IncrementRegist.cpp
 
-
-
-
-
-
-
+![incremental_registration](readme.assets/incremental_registration.gif)
 
 
 
