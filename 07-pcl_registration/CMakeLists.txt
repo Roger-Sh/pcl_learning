@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
-project(06-pcl_recognition)
+project(07-pcl_registration)
 
 # set cmake
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -16,6 +16,10 @@ include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-# # 01_recognition_CorrespondenceGrouping
-# add_executable(01_recognition_CorrespondenceGrouping src/01_recognition_CorrespondenceGrouping.cpp)
-# target_link_libraries(01_recognition_CorrespondenceGrouping ${PCL_LIBRARIES})
+# 01_registration_ICP
+add_executable(01_registration_ICP src/01_registration_ICP.cpp)
+target_link_libraries(01_registration_ICP ${PCL_LIBRARIES})
+
+# 02_registration_IncrementRegist
+add_executable(02_registration_IncrementRegist src/02_registration_IncrementRegist.cpp)
+target_link_libraries(02_registration_IncrementRegist ${PCL_LIBRARIES})

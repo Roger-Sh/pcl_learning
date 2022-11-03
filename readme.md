@@ -1091,6 +1091,37 @@ example
         -   ICP
         -   ...
 
+-   Iterative Closest Point 流程
+    1.  Search for correspondences.
+    2.  Reject bad correspondences.
+    3.  Estimate a transformation using the good correspondences.
+    4.  Iterate.
+
+-   Feature based registration
+    1.  use SIFT Keypoints (pcl::SIFT…something)
+    2.  use FPFH descriptors (pcl::FPFHEstimation) at the keypoints (see our tutorials for that, like http://www.pointclouds.org/media/rss2011.html)
+    3.  get the FPFH descriptors and estimate correspondences using pcl::CorrespondenceEstimation
+    4.  reject bad correspondences using one or many of the pcl::CorrespondenceRejectionXXX methods
+    5.  finally get a transformation as mentioned above
+
+
+
+
+
+### 7.2 iterative closest point
+
+example: 07-pcl_registration_ICP.cpp
+
+
+
+7.3 How to incrementally register pairs of clouds
+
+
+
+
+
+
+
 
 
 
