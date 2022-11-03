@@ -26,6 +26,18 @@ typedef pcl::PointNormal PointNormalT;
 typedef pcl::PointCloud<PointNormalT> PointCloudWithNormals;
 
 /**
+ * @brief params for registration
+ * 
+ */
+double VoxelGridLeafSize(0.1);  // default: 0.05
+int NormEstKSearch(50);         // default: 30
+double ICPMaxDist(0.2);         // default: 0.1
+int ICPMaxInnerIteration(5);    // default: 2
+int ICPMaxExternIteration(30);  // default: 30
+double ICPEPS(1e-06);           // default: 1e-06
+
+
+/**
  * @brief visualizer related
  * 
  */
@@ -95,8 +107,8 @@ void showCloudsLeft(const PointCloud::Ptr cloud_target, const PointCloud::Ptr cl
     p->removePointCloud("vp1_target");
     p->removePointCloud("vp1_source");
 
-    PointCloudColorHandlerCustom<PointT> tgt_h(cloud_target, 0, 255, 0);
-    PointCloudColorHandlerCustom<PointT> src_h(cloud_source, 255, 0, 0);
+    PointCloudColorHandlerCustom<PointT> tgt_h(cloud_target, 0, 255, 0);    // green for target
+    PointCloudColorHandlerCustom<PointT> src_h(cloud_source, 255, 0, 0);    // red for source
     p->addPointCloud(cloud_target, tgt_h, "vp1_target", vp_1);
     p->addPointCloud(cloud_source, src_h, "vp1_source", vp_1);
 
@@ -138,7 +150,7 @@ void loadData(int argc, char **argv, std::vector<PCD, Eigen::aligned_allocator<P
 {
     std::string extension(".pcd");
 
-    // Suppose the first argument is the actual test model
+    // check pcd file name
     for (int i = 1; i < argc; i++)
     {
         std::string fname = std::string(argv[i]);
@@ -194,7 +206,7 @@ void pairAlign(
     pcl::VoxelGrid<PointT> grid;
     if (downsample)
     {
-        grid.setLeafSize(0.05, 0.05, 0.05);
+        grid.setLeafSize(VoxelGridLeafSize, VoxelGridLeafSize, VoxelGridLeafSize);
         grid.setInputCloud(cloud_src);
         grid.filter(*src);
 
@@ -213,7 +225,7 @@ void pairAlign(
     pcl::NormalEstimation<PointT, PointNormalT> norm_est;
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>());
     norm_est.setSearchMethod(tree);
-    norm_est.setKSearch(30);
+    norm_est.setKSearch(NormEstKSearch);
 
     norm_est.setInputCloud(src);
     norm_est.compute(*points_with_normals_src);
@@ -231,10 +243,10 @@ void pairAlign(
 
     // ICPNonLinear for registration
     pcl::IterativeClosestPointNonLinear<PointNormalT, PointNormalT> reg;
-    reg.setTransformationEpsilon(1e-6);
+    reg.setTransformationEpsilon(ICPEPS);
     // Set the maximum distance between two correspondences (src<->tgt) to 10cm
     // Note: adjust this based on the size of your datasets
-    reg.setMaxCorrespondenceDistance(0.1);
+    reg.setMaxCorrespondenceDistance(ICPMaxDist);
     // Set the point representation
     reg.setPointRepresentation(boost::make_shared<const MyPointRepresentation>(point_representation));
     // set source and target clouds
@@ -244,15 +256,15 @@ void pairAlign(
     // Run the same optimization in a loop and visualize the results
     Eigen::Matrix4f Ti = Eigen::Matrix4f::Identity(), prev, targetToSource;
     PointCloudWithNormals::Ptr reg_result = points_with_normals_src;
-    reg.setMaximumIterations(2);
-    for (int i = 0; i < 30; ++i)
+    reg.setMaximumIterations(ICPMaxInnerIteration);
+    for (int i = 0; i < ICPMaxExternIteration; ++i)
     {
         PCL_INFO("Iteration Nr. %d.\n", i);
 
         // save cloud for visualization purpose
         points_with_normals_src = reg_result;
 
-        // Estimate
+        // ICP Estimate
         reg.setInputSource(points_with_normals_src);
         reg.align(*reg_result);
 
@@ -263,8 +275,11 @@ void pairAlign(
         // is smaller than the threshold, refine the process by reducing
         // the maximal correspondence distance
         if (fabs((reg.getLastIncrementalTransformation() - prev).sum()) < reg.getTransformationEpsilon())
+        {
             reg.setMaxCorrespondenceDistance(reg.getMaxCorrespondenceDistance() - 0.001);
+        }
 
+        // save current results as prev
         prev = reg.getLastIncrementalTransformation();
 
         // visualize current state
@@ -324,9 +339,9 @@ int main(int argc, char **argv)
     p->createViewPort(0.0, 0, 0.5, 1.0, vp_1);
     p->createViewPort(0.5, 0, 1.0, 1.0, vp_2);
 
+    // loop clouds to get transforms
     PointCloud::Ptr result(new PointCloud), source, target;
     Eigen::Matrix4f GlobalTransform = Eigen::Matrix4f::Identity(), pairTransform;
-
     for (size_t i = 1; i < data.size(); ++i)
     {
         source = data[i - 1].cloud;
@@ -335,8 +350,13 @@ int main(int argc, char **argv)
         // Add visualization data
         showCloudsLeft(source, target);
 
+        // print source and target info
+        PCL_INFO("Aligning %s (%d) with %s (%d).\n", 
+            data[i - 1].f_name.c_str(), source->points.size(), 
+            data[i].f_name.c_str(), target->points.size());
+
+        // pair align
         PointCloud::Ptr temp(new PointCloud);
-        PCL_INFO("Aligning %s (%d) with %s (%d).\n", data[i - 1].f_name.c_str(), source->points.size(), data[i].f_name.c_str(), target->points.size());
         pairAlign(source, target, temp, pairTransform, true);
 
         // transform current pair into the global transform
