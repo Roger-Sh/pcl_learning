@@ -23,3 +23,7 @@ target_link_libraries(01_registration_ICP ${PCL_LIBRARIES})
 # 02_registration_IncrementRegist
 add_executable(02_registration_IncrementRegist src/02_registration_IncrementRegist.cpp)
 target_link_libraries(02_registration_IncrementRegist ${PCL_LIBRARIES})
+
+# 03_registration_PeachRegist
+add_executable(03_registration_PeachRegist src/03_registration_PeachRegist.cpp)
+target_link_libraries(03_registration_PeachRegist ${PCL_LIBRARIES})

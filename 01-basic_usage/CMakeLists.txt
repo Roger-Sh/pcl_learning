@@ -28,3 +28,6 @@ target_link_libraries(matrix_transform ${PCL_LIBRARIES})
 add_executable(view_pcd src/view_pcd.cpp)
 target_link_libraries(view_pcd ${PCL_LIBRARIES})
 
+# ply2pcd
+add_executable(ply2pcd src/ply2pcd.cpp)
+target_link_libraries(ply2pcd ${PCL_LIBRARIES})

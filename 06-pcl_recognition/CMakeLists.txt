@@ -27,3 +27,7 @@ target_link_libraries(02_recognition_ImplicitShapeModel ${PCL_LIBRARIES})
 # 03_recognition_3DHypothesisVerification
 add_executable(03_recognition_3DHypothesisVerification src/03_recognition_3DHypothesisVerification.cpp)
 target_link_libraries(03_recognition_3DHypothesisVerification ${PCL_LIBRARIES})
+
+# 04_recognition_PeachCorrGrouping
+add_executable(04_recognition_PeachCorrGrouping src/04_recognition_PeachCorrGrouping.cpp)
+target_link_libraries(04_recognition_PeachCorrGrouping ${PCL_LIBRARIES})
